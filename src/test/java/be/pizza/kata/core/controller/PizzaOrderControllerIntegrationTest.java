@@ -1,14 +1,10 @@
-package be.pizza.kata;
+package be.pizza.kata.core.controller;
 
 import be.pizza.kata.core.controller.dto.request.PizzaOrderRequest;
 import be.pizza.kata.core.controller.dto.response.PizzaOrderResponse;
-import be.pizza.kata.core.domain.PizzaOrder;
 import be.pizza.kata.infrastructure.PizzaTest;
 import be.pizza.kata.core.repository.PizzaOrderRepository;
-import be.pizza.kata.infrastructure.constants.PizzaSize;
-import be.pizza.kata.infrastructure.constants.PizzaType;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -18,15 +14,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Map;
-
 import static be.pizza.kata.infrastructure.constants.PizzaSize.LARGE;
 import static be.pizza.kata.infrastructure.constants.PizzaSize.MEDIUM;
 import static be.pizza.kata.infrastructure.constants.PizzaType.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @PizzaTest
-public class OrderControllerTest {
+public class PizzaOrderControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -45,10 +39,11 @@ public class OrderControllerTest {
 
         ResponseEntity<PizzaOrderResponse> response = restTemplate.postForEntity("/order", entity, PizzaOrderResponse.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Assertions.assertNotNull(response.getBody());
-        assertThat(response.getBody().estimatedTime()).isEqualTo(MEDIUM.getEstimatedMinutes());
-        assertThat(response.getBody().orderId()).isNotNull();
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(MEDIUM.getEstimatedMinutes(), response.getBody().estimatedTime());
+        assertNotNull(response.getBody().orderId());
+
     }
 
     @Test
@@ -65,7 +60,7 @@ public class OrderControllerTest {
         restTemplate.postForEntity("/order", entity, PizzaOrderResponse.class);
 
         long countAfter = repository.count();
-        assertThat(countAfter).isEqualTo(countBefore + 1);
+        assertEquals(countBefore + 1, countAfter);
     }
 
     @Test
@@ -79,8 +74,10 @@ public class OrderControllerTest {
 
         ResponseEntity<String> response = restTemplate.postForEntity("/order", entity, String.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(response.getBody()).contains("Pizza type must not be null");
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().contains("Pizza type must not be null"));
     }
 
     @Test
@@ -94,7 +91,9 @@ public class OrderControllerTest {
 
         ResponseEntity<String> response = restTemplate.postForEntity("/order", entity, String.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(response.getBody()).contains("Pizza size must not be null");
+        assertNotNull(response);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().contains("Pizza size must not be null"));
     }
 }
