@@ -1,19 +1,17 @@
 package be.pizza.kata;
 
+import be.pizza.kata.domain.PizzaOrder;
 import be.pizza.kata.infrastructure.PizzaTest;
+import be.pizza.kata.repository.PizzaOrderRepository;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -33,8 +31,12 @@ public class OrderControllerTest {
     void order_shouldReturnOrderIdAndEstimatedTime() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String requestJson = "{ \"pizza\": \"MARGHERITA\", \"size\": \"MEDIUM\" }";
-        HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
+
+        PizzaOrder order = new PizzaOrder();
+        order.setPizza("MARGHERITA");
+        order.setSize("MEDIUM");
+
+        HttpEntity<PizzaOrder> entity = new HttpEntity<>(order, headers);
 
         ResponseEntity<Map> response = restTemplate.postForEntity("/order", entity, Map.class);
 
@@ -51,8 +53,12 @@ public class OrderControllerTest {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        String requestJson = "{ \"pizza\": \"PEPPERONI\", \"size\": \"LARGE\" }";
-        HttpEntity<String> entity = new HttpEntity<>(requestJson, headers);
+
+        PizzaOrder order = new PizzaOrder();
+        order.setPizza("PEPPERONI");
+        order.setSize("LARGE");
+
+        HttpEntity<PizzaOrder> entity = new HttpEntity<>(order, headers);
 
         restTemplate.postForEntity("/order", entity, Map.class);
 

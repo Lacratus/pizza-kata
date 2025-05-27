@@ -1,16 +1,17 @@
 
-package be.pizza.kata;
+package be.pizza.kata.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Data;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
 @Entity
+@Getter
+@Setter
 public class PizzaOrder {
 
     @Id
@@ -22,4 +23,19 @@ public class PizzaOrder {
     private String pizza;
     @Column(name = "size", nullable = false)
     private String size;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PizzaOrder other)) return false;
+        if (this.id == null || other.id == null) {
+            return false;
+        }
+        return this.id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return (id != null ? id.hashCode() : 0);
+    }
 }
