@@ -16,7 +16,7 @@ public class PizzaOrderService {
     }
 
     public PizzaOrder createOrder(PizzaOrder order) {
-        log.info("Ordering pizza: {}, size: {}", order.getPizzaName(), order.getSize());
+        log.info("Ordering pizza: {}, size: {}", order.getPizzaType(), order.getSize());
         return repository.save(order);
     }
 }

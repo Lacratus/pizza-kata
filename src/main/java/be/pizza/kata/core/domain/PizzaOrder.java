@@ -2,11 +2,15 @@
 package be.pizza.kata.core.domain;
 
 import be.pizza.kata.infrastructure.constants.PizzaSize;
+import be.pizza.kata.infrastructure.constants.PizzaType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
@@ -20,10 +24,12 @@ public class PizzaOrder {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name = "pizza", nullable = false)
-    private String pizzaName;
+    @Column(name = "pizza_type", nullable = false)
+    @NotNull(message = "Pizza type must not be null")
+    private PizzaType pizzaType;
 
     @Column(name = "size", nullable = false)
+    @NotNull(message = "Pizza size must not be null")
     private PizzaSize size;
 
     @Override

@@ -1,8 +1,23 @@
 package be.pizza.kata.infrastructure.constants;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Getter;
+
+@Getter
 public enum PizzaSize {
 
-    SMALL,
-    MEDIUM,
-    LARGE,
+    SMALL(15),
+    MEDIUM(20),
+    LARGE(25);
+
+    private final  int estimatedMinutes;
+
+    PizzaSize(int estimatedMinutes) {
+        this.estimatedMinutes = estimatedMinutes;
+    }
+
+    @JsonCreator
+    public static PizzaSize from(String value) {
+        return PizzaSize.valueOf(value.toUpperCase());
+    }
 }

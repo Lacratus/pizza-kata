@@ -4,6 +4,7 @@ import be.pizza.kata.core.controller.dto.request.PizzaOrderRequest;
 import be.pizza.kata.core.controller.dto.response.PizzaOrderResponse;
 import be.pizza.kata.core.controller.mapper.PizzaOrderMapper;
 import be.pizza.kata.core.service.PizzaOrderService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -19,14 +20,7 @@ public class OrderController {
     }
 
     @PostMapping("/order")
-    public Map<String, String> order(@RequestBody PizzaOrderRequest order) {
-        PizzaOrderResponse responseObject = PizzaOrderMapper.toResponse(pizzaOrderService.createOrder(PizzaOrderMapper.toEntity(order)));
-
-        String estimatedTime = "20 minutes";
-
-        Map<String, String> response = new HashMap<>();
-        response.put("orderId", responseObject.orderId().toString());
-        response.put("estimatedTime", estimatedTime);
-        return response;
+    public PizzaOrderResponse order(@RequestBody @Valid PizzaOrderRequest order) {
+        return PizzaOrderMapper.toResponse(pizzaOrderService.createOrder(PizzaOrderMapper.toEntity(order)));
     }
 }

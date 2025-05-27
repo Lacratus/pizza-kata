@@ -8,12 +8,12 @@ public class PizzaOrderMapper {
 
     public static PizzaOrder toEntity(PizzaOrderRequest request) {
         PizzaOrder order = new PizzaOrder();
-        order.setPizzaName(request.pizzaName());
+        order.setPizzaType(request.pizzaType());
         order.setSize(request.size());
         return order;
     }
 
     public static PizzaOrderResponse toResponse(PizzaOrder order) {
-        return new PizzaOrderResponse(order.getId(), order.getPizzaName(), order.getSize());
+        return new PizzaOrderResponse(order.getId(), order.getPizzaType(), order.getSize());
     }
 }

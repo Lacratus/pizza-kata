@@ -1,3 +1,3 @@
-INSERT INTO pizza_order (id, pizza, size) VALUES
+INSERT INTO pizza_order (id, pizza_type, size) VALUES
     ('11111111-1111-1111-1111-111111111111', 'MARGHERITA', 'MEDIUM'),
     ('22222222-2222-2222-2222-222222222222', 'PEPPERONI', 'LARGE');
