@@ -1,6 +1,7 @@
 
-package be.pizza.kata.domain;
+package be.pizza.kata.core.domain;
 
+import be.pizza.kata.infrastructure.constants.PizzaSize;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,9 +21,10 @@ public class PizzaOrder {
     private UUID id;
 
     @Column(name = "pizza", nullable = false)
-    private String pizza;
+    private String pizzaName;
+
     @Column(name = "size", nullable = false)
-    private String size;
+    private PizzaSize size;
 
     @Override
     public boolean equals(Object o) {

@@ -1,8 +1,9 @@
 package be.pizza.kata;
 
-import be.pizza.kata.domain.PizzaOrder;
+import be.pizza.kata.core.domain.PizzaOrder;
 import be.pizza.kata.infrastructure.PizzaTest;
-import be.pizza.kata.repository.PizzaOrderRepository;
+import be.pizza.kata.core.repository.PizzaOrderRepository;
+import be.pizza.kata.infrastructure.constants.PizzaSize;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class OrderControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         PizzaOrder order = new PizzaOrder();
-        order.setPizza("MARGHERITA");
-        order.setSize("MEDIUM");
+        order.setPizzaName("MARGHERITA");
+        order.setSize(PizzaSize.MEDIUM);
 
         HttpEntity<PizzaOrder> entity = new HttpEntity<>(order, headers);
 
@@ -55,8 +56,8 @@ public class OrderControllerTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         PizzaOrder order = new PizzaOrder();
-        order.setPizza("PEPPERONI");
-        order.setSize("LARGE");
+        order.setPizzaName("PEPPERONI");
+        order.setSize(PizzaSize.LARGE);
 
         HttpEntity<PizzaOrder> entity = new HttpEntity<>(order, headers);
 

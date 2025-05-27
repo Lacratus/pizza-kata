@@ -1,7 +1,7 @@
-package be.pizza.kata.service;
+package be.pizza.kata.core.service;
 
-import be.pizza.kata.domain.PizzaOrder;
-import be.pizza.kata.repository.PizzaOrderRepository;
+import be.pizza.kata.core.domain.PizzaOrder;
+import be.pizza.kata.core.repository.PizzaOrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class PizzaOrderService {
     }
 
     public PizzaOrder createOrder(PizzaOrder order) {
-        log.info("Ordering pizza: {}, size: {}", order.getPizza(), order.getSize());
+        log.info("Ordering pizza: {}, size: {}", order.getPizzaName(), order.getSize());
         return repository.save(order);
     }
 }

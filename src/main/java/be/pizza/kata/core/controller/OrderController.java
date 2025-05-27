@@ -1,11 +1,9 @@
-package be.pizza.kata.controller;
+package be.pizza.kata.core.controller;
 
-import be.pizza.kata.controller.dto.request.PizzaOrderRequest;
-import be.pizza.kata.controller.dto.response.PizzaOrderResponse;
-import be.pizza.kata.controller.mapper.PizzaOrderMapper;
-import be.pizza.kata.domain.PizzaOrder;
-import be.pizza.kata.service.PizzaOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import be.pizza.kata.core.controller.dto.request.PizzaOrderRequest;
+import be.pizza.kata.core.controller.dto.response.PizzaOrderResponse;
+import be.pizza.kata.core.controller.mapper.PizzaOrderMapper;
+import be.pizza.kata.core.service.PizzaOrderService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
