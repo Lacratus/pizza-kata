@@ -5,8 +5,10 @@ import be.pizza.kata.core.controller.dto.response.PizzaOrderResponse;
 import be.pizza.kata.core.domain.PizzaOrder;
 import org.junit.jupiter.api.Test;
 
-import static be.pizza.kata.infrastructure.constants.PizzaSize.LARGE;
-import static be.pizza.kata.infrastructure.constants.PizzaType.MARGHERITA;
+import java.util.Collections;
+
+import static be.pizza.kata.core.domain.enums.PizzaSize.LARGE;
+import static be.pizza.kata.core.domain.enums.PizzaType.MARGHERITA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -16,7 +18,7 @@ public class PizzaOrderMapperTest {
 
     @Test
     void toEntity_mapRequestToEntity() {
-        PizzaOrderRequest request = new PizzaOrderRequest(MARGHERITA, LARGE);
+        PizzaOrderRequest request = new PizzaOrderRequest(MARGHERITA, LARGE, Collections.emptyList());
 
         PizzaOrder entity = pizzaOrderMapper.toEntity(request);
 

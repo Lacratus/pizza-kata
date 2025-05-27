@@ -1,4 +1,4 @@
-package be.pizza.kata.infrastructure.constants;
+package be.pizza.kata.core.domain.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Getter;
 public enum PizzaType {
 
     MARGHERITA,
-    PEPERONI,
+    PEPPERONI,
     VIER_KAZEN,
     DIABOLIQUE;
 

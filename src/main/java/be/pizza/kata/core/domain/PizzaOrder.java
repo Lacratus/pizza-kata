@@ -1,17 +1,15 @@
 
 package be.pizza.kata.core.domain;
 
-import be.pizza.kata.infrastructure.constants.PizzaSize;
-import be.pizza.kata.infrastructure.constants.PizzaType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
+import be.pizza.kata.core.domain.enums.PizzaSize;
+import be.pizza.kata.core.domain.enums.PizzaTopping;
+import be.pizza.kata.core.domain.enums.PizzaType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,13 +22,22 @@ public class PizzaOrder {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name = "pizza_type", nullable = false)
     @NotNull(message = "Pizza type must not be null")
+    @Column(name = "pizza_type", nullable = false)
     private PizzaType pizzaType;
 
-    @Column(name = "size", nullable = false)
     @NotNull(message = "Pizza size must not be null")
+    @Column(name = "size", nullable = false)
     private PizzaSize size;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "pizza_order_toppings",
+            joinColumns = @JoinColumn(name = "order_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(name = "topping")
+    private List<PizzaTopping> toppings;
 
     @Override
     public boolean equals(Object o) {

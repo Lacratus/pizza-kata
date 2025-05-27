@@ -12,10 +12,11 @@ public class PizzaOrderMapper {
         PizzaOrder order = new PizzaOrder();
         order.setPizzaType(request.pizzaType());
         order.setSize(request.size());
+        order.setToppings(request.pizzaToppings());
         return order;
     }
 
     public PizzaOrderResponse toResponse(PizzaOrder order) {
-        return new PizzaOrderResponse(order.getId(), order.getPizzaType(), order.getSize());
+        return new PizzaOrderResponse(order.getId(), order.getPizzaType(), order.getSize(), order.getToppings());
     }
 }

@@ -1,13 +1,13 @@
 package be.pizza.kata.infrastructure.factory;
 
 import be.pizza.kata.core.domain.PizzaOrder;
-import be.pizza.kata.infrastructure.constants.PizzaSize;
-import be.pizza.kata.infrastructure.constants.PizzaType;
+import be.pizza.kata.core.domain.enums.PizzaSize;
+import be.pizza.kata.core.domain.enums.PizzaType;
 
 import java.util.UUID;
 
-import static be.pizza.kata.infrastructure.constants.PizzaSize.LARGE;
-import static be.pizza.kata.infrastructure.constants.PizzaType.MARGHERITA;
+import static be.pizza.kata.core.domain.enums.PizzaSize.LARGE;
+import static be.pizza.kata.core.domain.enums.PizzaType.MARGHERITA;
 
 public class PizzaOrderMother {
 

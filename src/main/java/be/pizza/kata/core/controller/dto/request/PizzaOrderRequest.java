@@ -1,7 +1,10 @@
 package be.pizza.kata.core.controller.dto.request;
 
-import be.pizza.kata.infrastructure.constants.PizzaSize;
-import be.pizza.kata.infrastructure.constants.PizzaType;
+import be.pizza.kata.core.domain.enums.PizzaSize;
+import be.pizza.kata.core.domain.enums.PizzaTopping;
+import be.pizza.kata.core.domain.enums.PizzaType;
 
-public record PizzaOrderRequest(PizzaType pizzaType, PizzaSize size) {
+import java.util.List;
+
+public record PizzaOrderRequest(PizzaType pizzaType, PizzaSize size, List<PizzaTopping> pizzaToppings) {
 }

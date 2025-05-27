@@ -4,7 +4,6 @@ import be.pizza.kata.core.controller.dto.request.PizzaOrderRequest;
 import be.pizza.kata.core.controller.dto.response.PizzaOrderResponse;
 import be.pizza.kata.infrastructure.PizzaTest;
 import be.pizza.kata.core.repository.PizzaOrderRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -14,9 +13,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import static be.pizza.kata.infrastructure.constants.PizzaSize.LARGE;
-import static be.pizza.kata.infrastructure.constants.PizzaSize.MEDIUM;
-import static be.pizza.kata.infrastructure.constants.PizzaType.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static be.pizza.kata.core.domain.enums.PizzaSize.LARGE;
+import static be.pizza.kata.core.domain.enums.PizzaSize.MEDIUM;
+import static be.pizza.kata.core.domain.enums.PizzaTopping.*;
+import static be.pizza.kata.core.domain.enums.PizzaType.*;
+import static be.pizza.kata.infrastructure.constants.PizzaKataConstants.EXTRA_TIME_PER_TOPPING;
 import static org.junit.jupiter.api.Assertions.*;
 
 @PizzaTest
@@ -33,7 +38,7 @@ public class PizzaOrderControllerIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        PizzaOrderRequest order = new PizzaOrderRequest(MARGHERITA, MEDIUM);
+        PizzaOrderRequest order = new PizzaOrderRequest(MARGHERITA, MEDIUM, Collections.emptyList());
 
         HttpEntity<PizzaOrderRequest> entity = new HttpEntity<>(order, headers);
 
@@ -43,7 +48,6 @@ public class PizzaOrderControllerIntegrationTest {
         assertNotNull(response.getBody());
         assertEquals(MEDIUM.getEstimatedMinutes(), response.getBody().estimatedTime());
         assertNotNull(response.getBody().orderId());
-
     }
 
     @Test
@@ -53,7 +57,7 @@ public class PizzaOrderControllerIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        PizzaOrderRequest order = new PizzaOrderRequest(PEPERONI, LARGE);
+        PizzaOrderRequest order = new PizzaOrderRequest(PEPPERONI, LARGE, Collections.emptyList());
 
         HttpEntity<PizzaOrderRequest> entity = new HttpEntity<>(order, headers);
 
@@ -68,7 +72,7 @@ public class PizzaOrderControllerIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        PizzaOrderRequest order = new PizzaOrderRequest(null, LARGE);
+        PizzaOrderRequest order = new PizzaOrderRequest(null, LARGE, Collections.emptyList());
 
         HttpEntity<PizzaOrderRequest> entity = new HttpEntity<>(order, headers);
 
@@ -85,7 +89,7 @@ public class PizzaOrderControllerIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        PizzaOrderRequest order = new PizzaOrderRequest(DIABOLIQUE, null);
+        PizzaOrderRequest order = new PizzaOrderRequest(DIABOLIQUE, null, Collections.emptyList());
 
         HttpEntity<PizzaOrderRequest> entity = new HttpEntity<>(order, headers);
 
@@ -95,5 +99,22 @@ public class PizzaOrderControllerIntegrationTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNotNull(response.getBody());
         assertTrue(response.getBody().contains("Pizza size must not be null"));
+    }
+
+    @Test
+    void order_useExtraToppings_AddExtraMinutes() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        PizzaOrderRequest order = new PizzaOrderRequest(MARGHERITA, MEDIUM, Arrays.asList(EXTRA_CHEESE, EXTRA_PEPPERONI, OLIVES));
+
+        HttpEntity<PizzaOrderRequest> entity = new HttpEntity<>(order, headers);
+
+        ResponseEntity<PizzaOrderResponse> response = restTemplate.postForEntity("/order", entity, PizzaOrderResponse.class);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(MEDIUM.getEstimatedMinutes() + EXTRA_TIME_PER_TOPPING * order.pizzaToppings().size(), response.getBody().estimatedTime());
+        assertNotNull(response.getBody().orderId());
     }
 }
