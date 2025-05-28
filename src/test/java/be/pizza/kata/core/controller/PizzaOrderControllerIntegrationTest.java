@@ -2,7 +2,7 @@ package be.pizza.kata.core.controller;
 
 import be.pizza.kata.core.controller.dto.request.PizzaOrderRequest;
 import be.pizza.kata.core.controller.dto.response.PizzaOrderResponse;
-import be.pizza.kata.infrastructure.PizzaTest;
+import be.pizza.kata.infrastructure.test.PizzaTest;
 import be.pizza.kata.core.repository.PizzaOrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
